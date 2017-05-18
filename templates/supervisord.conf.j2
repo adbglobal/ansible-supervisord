@@ -12,8 +12,10 @@ supervisor.rpcinterface_factory = supervisor.rpcinterface:make_main_rpcinterface
 file = {{supervisord_socket_path}}
 chmod = 700
 chown = {{supervisord_user}}
+{% if supervisord_password|length > 0 %}
 username = {{supervisord_user}}
 password = {SHA}{{supervisord_password|hash('sha1')}}
+{% endif %}
 
 [supervisorctl]
 serverurl = unix://{{supervisord_socket_path}}
